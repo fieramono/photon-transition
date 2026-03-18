@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Photon Transition — WebGL circular mask transition with chromatic aberration and refraction distortion effects.">
+    <title>Photon Transition · WebGL Scene Navigator</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- ─── Sidebar ──────────────────────────────────── -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar__logo">
+                <span class="sidebar__logo-icon">◈</span>
+                Photon Transition
+            </div>
+            <p class="sidebar__subtitle">WebGL Scene Navigator &mdash; Click to explore</p>
+
+            <span class="sidebar__label">Scenes</span>
+            <ul class="scene-list" id="scene-list"></ul>
+
+            <!-- ─── Settings Panel ───────────────────────── -->
+            <div class="settings-panel" id="settings-panel">
+                <button class="settings-toggle" id="settings-toggle" type="button">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    Transition Settings
+                    <span class="settings-toggle__chevron" id="settings-chevron">▾</span>
+                </button>
+
+                <div class="settings-body" id="settings-body">
+                    <!-- Speed Slider -->
+                    <div class="settings-group">
+                        <label class="settings-label" for="speed-slider">
+                            Speed
+                            <span class="settings-value" id="speed-value">1400ms</span>
+                        </label>
+                        <input type="range" class="settings-slider" id="speed-slider"
+                               min="100" max="3000" step="50" value="1400">
+                        <div class="speed-presets" id="speed-presets">
+                            <button class="speed-preset" data-speed="ultra-fast" type="button">Ultra Fast</button>
+                            <button class="speed-preset" data-speed="fast" type="button">Fast</button>
+                            <button class="speed-preset active" data-speed="normal" type="button">Normal</button>
+                            <button class="speed-preset" data-speed="slow" type="button">Slow</button>
+                            <button class="speed-preset" data-speed="ultra-slow" type="button">Ultra Slow</button>
+                        </div>
+                    </div>
+
+                    <!-- Easing Selector -->
+                    <div class="settings-group">
+                        <label class="settings-label" for="easing-select">Easing Curve</label>
+                        <select class="settings-select" id="easing-select">
+                            <option value="easeOutQuart" selected>Ease Out Quart ⬤</option>
+                            <option value="linear">Linear</option>
+                            <option value="easeInOutCubic">Ease In-Out Cubic</option>
+                            <option value="easeOutExpo">Ease Out Expo</option>
+                            <option value="easeInOutQuint">Ease In-Out Quint</option>
+                            <option value="easeOutBack">Ease Out Back (overshoot)</option>
+                            <option value="easeOutElastic">Ease Out Elastic (bounce)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar__footer">
+                <span class="sidebar__footer-text">WebGL2 · GLSL Shaders · Vanilla JS</span>
+                <span class="sidebar__footer-badge">v1.1</span>
+            </div>
+        </aside>
+
+        <!-- ─── Viewport ─────────────────────────────────── -->
+        <main class="viewport" id="viewport">
+            <div class="progress-bar" id="progress-bar"></div>
+
+            <div class="viewport__counter" id="viewport-counter">
+                <span id="counter-current">01</span> / <span id="counter-total">06</span>
+            </div>
+
+            <div class="cursor-hint" id="cursor-hint">
+                <span class="cursor-hint__dot"></span>
+                Click anywhere to transition
+            </div>
+
+            <div class="viewport__overlay" id="viewport-overlay">
+                <h1 class="viewport__title" id="viewport-title">Alpine Sunset</h1>
+                <p class="viewport__desc" id="viewport-desc">Dramatic peaks illuminated by the last rays of a fiery sunset across the alpine skyline.</p>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
