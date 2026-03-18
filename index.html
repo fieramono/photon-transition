@@ -11,60 +11,67 @@
     <div class="app" id="app">
         <!-- ─── Sidebar ──────────────────────────────────── -->
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar__logo">
-                <span class="sidebar__logo-icon">◈</span>
-                Photon Transition
-            </div>
-            <p class="sidebar__subtitle">WebGL Scene Navigator &mdash; Click to explore</p>
+            <div class="sidebar__handle"></div>
+            <button class="sidebar__close" id="mobile-panel-close" aria-label="Close panel">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
 
-            <span class="sidebar__label">Scenes</span>
-            <ul class="scene-list" id="scene-list"></ul>
+            <div class="sidebar__content">
+                <div class="sidebar__logo">
+                    <span class="sidebar__logo-icon">◈</span>
+                    Photon Transition
+                </div>
+                <p class="sidebar__subtitle">WebGL Scene Navigator &mdash; Click to explore</p>
 
-            <!-- ─── Settings Panel ───────────────────────── -->
-            <div class="settings-panel" id="settings-panel">
-                <button class="settings-toggle" id="settings-toggle" type="button">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                    Transition Settings
-                    <span class="settings-toggle__chevron" id="settings-chevron">▾</span>
-                </button>
+                <span class="sidebar__label">Scenes</span>
+                <ul class="scene-list" id="scene-list"></ul>
 
-                <div class="settings-body" id="settings-body">
-                    <!-- Speed Slider -->
-                    <div class="settings-group">
-                        <label class="settings-label" for="speed-slider">
-                            Speed
-                            <span class="settings-value" id="speed-value">1400ms</span>
-                        </label>
-                        <input type="range" class="settings-slider" id="speed-slider"
-                               min="100" max="3000" step="50" value="1400">
-                        <div class="speed-presets" id="speed-presets">
-                            <button class="speed-preset" data-speed="ultra-fast" type="button">Ultra Fast</button>
-                            <button class="speed-preset" data-speed="fast" type="button">Fast</button>
-                            <button class="speed-preset active" data-speed="normal" type="button">Normal</button>
-                            <button class="speed-preset" data-speed="slow" type="button">Slow</button>
-                            <button class="speed-preset" data-speed="ultra-slow" type="button">Ultra Slow</button>
+                <!-- ─── Settings Panel ───────────────────────── -->
+                <div class="settings-panel" id="settings-panel">
+                    <button class="settings-toggle" id="settings-toggle" type="button">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        Transition Settings
+                        <span class="settings-toggle__chevron" id="settings-chevron">▾</span>
+                    </button>
+
+                    <div class="settings-body" id="settings-body">
+                        <!-- Speed Slider -->
+                        <div class="settings-group">
+                            <label class="settings-label" for="speed-slider">
+                                Speed
+                                <span class="settings-value" id="speed-value">1400ms</span>
+                            </label>
+                            <input type="range" class="settings-slider" id="speed-slider"
+                                   min="100" max="3000" step="50" value="1400">
+                            <div class="speed-presets" id="speed-presets">
+                                <button class="speed-preset" data-speed="ultra-fast" type="button">Ultra Fast</button>
+                                <button class="speed-preset" data-speed="fast" type="button">Fast</button>
+                                <button class="speed-preset active" data-speed="normal" type="button">Normal</button>
+                                <button class="speed-preset" data-speed="slow" type="button">Slow</button>
+                                <button class="speed-preset" data-speed="ultra-slow" type="button">Ultra Slow</button>
+                            </div>
+                        </div>
+
+                        <!-- Easing Selector -->
+                        <div class="settings-group">
+                            <label class="settings-label" for="easing-select">Easing Curve</label>
+                            <select class="settings-select" id="easing-select">
+                                <option value="easeOutQuart" selected>Ease Out Quart ⬤</option>
+                                <option value="linear">Linear</option>
+                                <option value="easeInOutCubic">Ease In-Out Cubic</option>
+                                <option value="easeOutExpo">Ease Out Expo</option>
+                                <option value="easeInOutQuint">Ease In-Out Quint</option>
+                                <option value="easeOutBack">Ease Out Back (overshoot)</option>
+                                <option value="easeOutElastic">Ease Out Elastic (bounce)</option>
+                            </select>
                         </div>
                     </div>
-
-                    <!-- Easing Selector -->
-                    <div class="settings-group">
-                        <label class="settings-label" for="easing-select">Easing Curve</label>
-                        <select class="settings-select" id="easing-select">
-                            <option value="easeOutQuart" selected>Ease Out Quart ⬤</option>
-                            <option value="linear">Linear</option>
-                            <option value="easeInOutCubic">Ease In-Out Cubic</option>
-                            <option value="easeOutExpo">Ease Out Expo</option>
-                            <option value="easeInOutQuint">Ease In-Out Quint</option>
-                            <option value="easeOutBack">Ease Out Back (overshoot)</option>
-                            <option value="easeOutElastic">Ease Out Elastic (bounce)</option>
-                        </select>
-                    </div>
                 </div>
-            </div>
 
-            <div class="sidebar__footer">
-                <span class="sidebar__footer-text">WebGL2 · GLSL Shaders · Vanilla JS</span>
-                <span class="sidebar__footer-badge">v1.1</span>
+                <div class="sidebar__footer">
+                    <span class="sidebar__footer-text">WebGL2 · GLSL Shaders · Vanilla JS</span>
+                    <span class="sidebar__footer-badge">v1.1</span>
+                </div>
             </div>
         </aside>
 
@@ -78,14 +85,32 @@
 
             <div class="cursor-hint" id="cursor-hint">
                 <span class="cursor-hint__dot"></span>
-                Click anywhere to transition
+                <span class="cursor-hint__text-desktop">Click anywhere to transition</span>
+                <span class="cursor-hint__text-mobile">Tap to transition</span>
             </div>
 
             <div class="viewport__overlay" id="viewport-overlay">
                 <h1 class="viewport__title" id="viewport-title">Alpine Sunset</h1>
                 <p class="viewport__desc" id="viewport-desc">Dramatic peaks illuminated by the last rays of a fiery sunset across the alpine skyline.</p>
             </div>
+
+            <!-- Mobile bottom bar -->
+            <div class="mobile-toolbar" id="mobile-toolbar">
+                <button class="mobile-toolbar__btn" id="mobile-prev" type="button" aria-label="Previous scene">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="mobile-toolbar__toggle" id="mobile-panel-toggle" type="button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span>Scenes & Settings</span>
+                </button>
+                <button class="mobile-toolbar__btn" id="mobile-next" type="button" aria-label="Next scene">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+            </div>
         </main>
+
+        <!-- Mobile overlay backdrop -->
+        <div class="mobile-backdrop" id="mobile-backdrop"></div>
     </div>
 
     <script type="module" src="app.js"></script>

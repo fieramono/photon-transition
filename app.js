@@ -132,19 +132,31 @@ listEl.addEventListener('click', (e) => {
     const idx = parseInt(item.dataset.index);
     if (isNaN(idx)) return;
 
-    // Map click position to the viewport
     const rect = viewportEl.getBoundingClientRect();
-    // Use a position on the right edge, vertically centered from the list item
-    const itemRect  = item.getBoundingClientRect();
-    const clientX   = rect.left + 60;  // near left edge of viewport
-    const clientY   = itemRect.top + itemRect.height / 2;
+    const isMobile = window.innerWidth <= 860;
+
+    let clientX, clientY;
+    if (isMobile) {
+        // On mobile, originate from center of viewport
+        clientX = rect.left + rect.width / 2;
+        clientY = rect.top + rect.height / 2;
+        // Close the mobile panel
+        closeMobilePanel();
+    } else {
+        // On desktop, originate from left edge near the list item
+        const itemRect = item.getBoundingClientRect();
+        clientX = rect.left + 60;
+        clientY = itemRect.top + itemRect.height / 2;
+    }
 
     photon.transitionTo(idx, clientX, clientY);
 });
 
-/* ─── Event: Click on viewport directly ─────────────────────────── */
+/* ─── Event: Click/tap on viewport directly ─────────────────────── */
 viewportEl.addEventListener('click', (e) => {
     if (photon.isAnimating) return;
+    // Don't fire if clicking on the mobile toolbar buttons
+    if (e.target.closest('.mobile-toolbar')) return;
     // cycle to next
     const next = (photon.currentIdx + 1) % SCENES.length;
     photon.transitionTo(next, e.clientX, e.clientY);
@@ -211,3 +223,90 @@ easingSelect.addEventListener('change', () => {
     photon.setEasing(easingSelect.value);
 });
 
+/* ─── Mobile Panel Logic ─────────────────────────────────────── */
+const sidebarEl      = document.getElementById('sidebar');
+const mobileToggle   = document.getElementById('mobile-panel-toggle');
+const mobileClose    = document.getElementById('mobile-panel-close');
+const mobileBackdrop = document.getElementById('mobile-backdrop');
+const mobilePrev     = document.getElementById('mobile-prev');
+const mobileNext     = document.getElementById('mobile-next');
+
+function openMobilePanel() {
+    sidebarEl.classList.add('mobile-open');
+    mobileBackdrop.classList.add('visible');
+}
+
+function closeMobilePanel() {
+    sidebarEl.classList.remove('mobile-open');
+    mobileBackdrop.classList.remove('visible');
+}
+
+function toggleMobilePanel() {
+    if (sidebarEl.classList.contains('mobile-open')) {
+        closeMobilePanel();
+    } else {
+        openMobilePanel();
+    }
+}
+
+// Toggle button
+mobileToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMobilePanel();
+});
+
+// Close buttons
+mobileClose.addEventListener('click', closeMobilePanel);
+mobileBackdrop.addEventListener('click', closeMobilePanel);
+
+// Prev/Next buttons
+mobilePrev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (photon.isAnimating) return;
+    const rect = viewportEl.getBoundingClientRect();
+    const prev = (photon.currentIdx - 1 + SCENES.length) % SCENES.length;
+    photon.transitionTo(prev, rect.left + rect.width * 0.3, rect.top + rect.height / 2);
+});
+
+mobileNext.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (photon.isAnimating) return;
+    const rect = viewportEl.getBoundingClientRect();
+    const next = (photon.currentIdx + 1) % SCENES.length;
+    photon.transitionTo(next, rect.left + rect.width * 0.7, rect.top + rect.height / 2);
+});
+
+/* ─── Touch: swipe left/right on viewport ────────────────────── */
+let touchStartX = 0;
+let touchStartY = 0;
+
+viewportEl.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+viewportEl.addEventListener('touchend', (e) => {
+    if (photon.isAnimating) return;
+    if (e.target.closest('.mobile-toolbar')) return;
+
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
+
+    // Only trigger on horizontal swipes > 50px and more horizontal than vertical
+    if (absDx > 50 && absDx > absDy * 1.5) {
+        const rect = viewportEl.getBoundingClientRect();
+        const cy   = rect.top + rect.height / 2;
+
+        if (dx < 0) {
+            // Swipe left → next
+            const next = (photon.currentIdx + 1) % SCENES.length;
+            photon.transitionTo(next, rect.left + rect.width * 0.8, cy);
+        } else {
+            // Swipe right → prev
+            const prev = (photon.currentIdx - 1 + SCENES.length) % SCENES.length;
+            photon.transitionTo(prev, rect.left + rect.width * 0.2, cy);
+        }
+    }
+}, { passive: true });
